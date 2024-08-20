@@ -1,0 +1,24 @@
+# CONFIGURATION FILE FOR UNIGENEFINDER
+# All paths can be relative or absolute
+
+# Path to Trinity assemblies in FASTA format
+trinity_assemblies=ExampleData/Arabidopsis.fasta
+
+# Path to Trinity gene-to-transcript map file
+trinity_map=ExampleData/Arabidopsis.map
+
+# Number of CPU threads; enter 0 to specify all available
+threads=0
+
+# Memory available for CD-HIT; enter 0 for the default value, 50% of system memory
+mem=0
+
+# C value for CD-HIT, 0.9-1.0, indicating the similarity threshold (lower = less strict clustering)
+c = 0.98
+
+# Path to BAM files for Compacta; BAM files in this folder must end in .bam
+bamdir = ExampleData/BAM
+
+# Working directory
+workdir=UniGeneFinder_Working_Directory
+

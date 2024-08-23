@@ -15,7 +15,7 @@ The pipeline is implemented in Python and is fully automated, making it accessib
 
 ### Installation
 
-Detailed instructions for installation on both Linux and Windows systems can be found in the Installation Guide. The included Singularity container in the ZIP archive under the Releases section contains all dependencies, simplifying the setup process.
+Detailed instructions for installation on both Linux and Windows systems can be found in the operating system-specific installation guides. The included Singularity container in the ZIP archive under the Releases section contains all dependencies, simplifying the setup process.
 
 ### Running UnigeneFinder
 

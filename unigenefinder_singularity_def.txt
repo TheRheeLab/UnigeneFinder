@@ -1,0 +1,66 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+%help
+    This container installs samtools, bowtie2, rsem, cd-hit, TransDecoder, Compacta, and Python 3 with required libraries.
+
+%post
+    # Update and upgrade the package lists
+    apt-get update && apt-get upgrade -y
+
+    # Install essential tools, development tools, and Perl
+    apt-get install -y wget curl make perl libdb-dev gcc cpanminus
+
+    # Download and install TransDecoder
+    wget https://github.com/TransDecoder/TransDecoder/archive/refs/tags/TransDecoder-v5.7.1.tar.gz
+    tar -xvf TransDecoder-v5.7.1.tar.gz
+    cp -r TransDecoder-TransDecoder-v5.7.1/PerlLib /usr/local/lib/  # Copy PerlLib to /usr/local/lib/
+    mv TransDecoder-TransDecoder-v5.7.1/util /usr/bin/util  # Move util folder to /usr/bin/
+    chmod +x TransDecoder-TransDecoder-v5.7.1/TransDecoder.LongOrfs
+    mv TransDecoder-TransDecoder-v5.7.1/TransDecoder.LongOrfs /usr/bin/
+
+    # Install Perl modules needed for TransDecoder
+    cpanm install DB_File
+    cpanm install URI::Escape
+
+    # Install other required packages via apt-get
+    apt-get install -y samtools bowtie2 rsem cd-hit python3 python3-pip python3-venv
+
+    # Create a virtual environment for Python packages
+    python3 -m venv /opt/venv
+    . /opt/venv/bin/activate
+
+    # Install biopython and other required Python packages in the virtual environment
+    pip install biopython networkx psutil pandas numpy
+
+    # Download and install Compacta
+    wget https://github.com/bioCompU/Compacta/releases/download/v1.02/Compacta-1.02_Linux.tar.gz
+    tar -xzf Compacta-1.02_Linux.tar.gz
+    chmod +x Compacta-1.02_Linux/Compacta
+    mv Compacta-1.02_Linux/Compacta /usr/bin/
+
+    # Clean up
+    rm -rf Compacta-1.02_Linux.tar.gz Compacta-1.02_Linux
+    rm -rf TransDecoder-v5.7.1.tar.gz TransDecoder-TransDecoder-v5.7.1
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    # Set environment variables
+    export PATH=/usr/bin:$PATH
+    export PERL5LIB=/usr/local/lib/PerlLib:$PERL5LIB  # Set PERL5LIB to include the PerlLib directory
+    # Activate the virtual environment
+    . /opt/venv/bin/activate
+    # Locale settings
+    export LANG=C.UTF-8
+    export LC_ALL=C.UTF-8
+
+%runscript
+    # Run the script provided as argument with the configuration file
+    if [ $# -lt 2 ]; then
+        echo "Usage: singularity run my_pipeline.sif <script> <config_file>"
+        exit 1
+    fi
+    script=$1
+    shift
+    python3 "$script" "$@"

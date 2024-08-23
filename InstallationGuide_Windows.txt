@@ -1,0 +1,72 @@
+#######################################################
+####################### WINDOWS #######################
+#######################################################
+
+# WSL and Singularity Installation Guide
+
+This guide will walk you through the steps to install the Windows Subsystem for Linux (WSL) on a Windows computer and then install Singularity in your WSL environment.
+
+## Step 1: Enable WSL and Virtual Machine Platform
+
+1. **Open PowerShell as Administrator**:
+   - Right-click on the Start button and select **Windows PowerShell (Admin)**.
+
+2. **Enable WSL Feature**:
+   - Run the following command in PowerShell:
+     
+powershell
+     dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+
+
+3. **Enable Virtual Machine Platform**:
+   - Run the following command in PowerShell:
+     	powershell dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+4. **Set WSL 2 as Default Version**:
+   - Run the following command in PowerShell:
+     	wsl --set-default-version 2
+
+5. **Restart Your Computer**:
+
+## Step 2: Install Ubuntu from Microsoft Store
+
+1. **Open Microsoft Store**:
+   - Search for **Ubuntu**.
+
+2. **Install the Latest LTS Version**:
+   - Select the latest Ubuntu LTS (e.g., Ubuntu 24.04 LTS) and click **Install**.
+
+3. **Launch Ubuntu**:
+   - Once installed, launch Ubuntu from the Start menu.
+
+4. **Set Up Ubuntu**:
+   - Follow the on-screen instructions to create a user account and password.
+
+## Step 3: Install Singularity in WSL
+
+1. **Update Package Lists**:
+   - Open the Ubuntu terminal and run:
+	sudo apt-get update && sudo apt-get upgrade -y
+
+2. **Install Dependencies**:
+   - Run the following command to install required dependencies:
+     	sudo apt-get install -y build-essential libseccomp-dev pkg-config squashfs-tools cryptsetup runc wget
+
+3. **Download Singularity**:
+   - Download the latest Singularity .deb package:
+     	wget https://github.com/sylabs/singularity/releases/download/v4.1.5/singularity-ce_4.1.5-noble_amd64.deb
+   NOTE: the file "noble" corresponds to Ubuntu 24, "Noble Numbat."  If a different version of Ubuntu is installed, a different .deb file must be downloaded.
+
+4. **Install Singularity**:
+   - Install the downloaded package:
+	sudo dpkg -i singularity-ce_4.1.2-focal_amd64.deb
+
+5. **Install Missing Dependencies**:
+   - If there are missing dependencies, run:
+     	sudo apt-get install -f
+
+6. **Verify Singularity Installation**:
+   - Check the installed version:
+     	singularity --version
+
+   - You should see the installed Singularity version (e.g., singularity-ce version 4.1.5-noble).

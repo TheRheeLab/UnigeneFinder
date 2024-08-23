@@ -1,0 +1,56 @@
+#######################################################
+####################### LINUX #########################
+#######################################################
+
+# Singularity Installation Guide for Linux
+
+This guide will walk you through the steps to install Singularity on a Linux system. It also includes steps to check if Singularity is already installed, which is particularly useful in HPC environments.
+
+## Step 1: Check if Singularity is Already Installed
+
+1. **Check if Singularity is in Your Path**:
+   - Open a terminal and run:
+     singularity --version
+   - If Singularity is installed, this command will return the version number.
+
+2. **Check if Singularity is Available as a Module**:
+   - If Singularity is not found in your path, check if it is available as a module (common in HPC environments):
+     module spider singularity
+   - If available, load the module:
+     module load singularity
+   - Verify the installation:
+     singularity --version
+   - If Singularity is available as a module and loads correctly, you can skip to **Step 3: Verify Singularity Installation**.
+
+## Step 2: Install Singularity on Linux
+
+If Singularity is not already installed or available as a module, follow these steps:
+
+1. **Update Package Lists**:
+   - Open a terminal and run:
+     sudo apt-get update && sudo apt-get upgrade -y
+
+2. **Install Dependencies**:
+   - Run the following command to install required dependencies:
+     sudo apt-get install -y build-essential libseccomp-dev pkg-config squashfs-tools cryptsetup runc wget
+
+3. **Download Singularity**:
+   - Download the latest Singularity .deb package:
+     wget https://github.com/sylabs/singularity/releases/download/v4.1.5/singularity-ce_4.1.5-noble_amd64.deb
+   - NOTE: The file "noble" corresponds to Ubuntu 24.04, "Noble Numbat." If you are using a different version of Ubuntu or another Linux distribution, you may need a different .deb file.
+
+4. **Install Singularity**:
+   - Install the downloaded package:
+     sudo dpkg -i singularity-ce_4.1.5-noble_amd64.deb
+
+5. **Install Missing Dependencies**:
+   - If there are missing dependencies, run:
+     sudo apt-get install -f
+
+## Step 3: Verify Singularity Installation
+
+1. **Check the Installed Version**:
+   - Run the following command:
+     singularity --version
+   - You should see the installed Singularity version (e.g., `singularity-ce version 4.1.5-noble`).
+

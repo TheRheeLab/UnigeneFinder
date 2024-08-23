@@ -21,4 +21,4 @@ Detailed instructions for installation on both Linux and Windows systems can be 
 
 Once installed, running UnigeneFinder is straightforward. Example commands and configurations are provided in the Usage Guide, along with a sample dataset available for download from the Releases section. This dataset includes example data and the Singularity container for quick testing and demonstration of the pipeline's capabilities.
 
-**Note:** The ZIP archive under releases includes both the Singularity container and example data, making it easy to get started with UnigeneFinder right away.
+**Note:** The ZIP archive under releases includes both the Singularity container and example data. These are not included when cloning the repository or downloading the source code archives.

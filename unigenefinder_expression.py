@@ -9,7 +9,7 @@ from unigenefinder import check_programs_in_path
 from unigenefinder.exp import (
     run_rsem_prepare_reference,
     run_rsem_scan_paired_end_reads,
-    run_rsem_calculate_expression,
+    process_all_bam_files,
     compile_expression_data
 )
 
@@ -84,23 +84,21 @@ def main():
             # Run the rsem-scan-for-paired-end-reads command
             run_rsem_scan_paired_end_reads(args.threads, input_bam, output_bam, log_file)
 
-    # CALCULATING EXPRESSION
-    print('CALCULATING EXPRESSION:\n')
+    # CALCULATING EXPRESSION (in parallel):
+    print('\nCALCULATING EXPRESSION (in parallel):\n')
 
-    # Set bam_dir based on whether the reads are paired-end or single-end
+    # Determine the directory containing the BAM files based on read type.
     bam_dir = os.path.join(args.out, 'converted_bam') if args.type == 'paired' else args.bamdir
 
-    # Loop over all BAM files in the determined bam_dir, calculating expression
-    bam_files = [f for f in os.listdir(bam_dir) if f.lower().endswith('.bam')]
-
-    for bam_file in bam_files:
-        input_bam = os.path.join(bam_dir, bam_file)
-        bam_name = os.path.splitext(bam_file)[0]  # Get the BAM file name without the extension
-        out_prefix = os.path.join(args.out, 'results', bam_name)
-        log_file = os.path.join(args.out, 'logs', f'{bam_name}_expression_log.txt')
-        
-        # Run the rsem-calculate-expression command
-        run_rsem_calculate_expression(args.threads, input_bam, reference_out_prefix, out_prefix, args.type == 'paired', log_file)
+    # Process all BAM files in parallel.
+    process_all_bam_files(
+        bam_dir=bam_dir,
+        reference_out_prefix=os.path.join(args.out, 'reference', 'rsem_reference'),
+        results_dir=os.path.join(args.out, 'results'),
+        logs_dir=os.path.join(args.out, 'logs'),
+        paired=(args.type == 'paired'),
+        threads=args.threads
+    )
 
     # COMPILING EXPRESSION CSV TABLES
     print('COMPILING EXPRESSION CSV TABLES:\n')

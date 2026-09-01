@@ -28,13 +28,13 @@ Once installed, running UnigeneFinder is straightforward. Example commands and c
 
 To test the pipeline using the provided example data, follow these steps:
 
-First, extract the example data from the provided archive, note that the example data is only included in [UnigeneFinder v1.0](https://github.com/TheRheeLab/UnigeneFinder/releases/download/v1.0/UnigeneFinder_v1.0.zip):
+First, extract the example data from the provided archive, note that the example data is only included in [UnigeneFinder v1.0.zip](https://github.com/TheRheeLab/UnigeneFinder/releases/download/v1.0/UnigeneFinder_v1.0.zip):
 
 ```bash
 tar -xvf ExampleData.tar.gz
 ```
 
-If you cannot find "unigenefinder.sif" in the archive or the provided ".sif" file does not run on your system, you may rebuild the singularity container using the follwing command:
+If you cannot find "unigenefinder.sif" in the archive or the provided ".sif" file does not run on your system, you may need to rebuild the singularity container using the follwing command:
 
 ```bash
 sudo singularity build unigenefinder.sif unigenefinder_singularity_def.txt

@@ -34,6 +34,12 @@ First, extract the example data from the provided archive, note that the example
 tar -xvf ExampleData.tar.gz
 ```
 
+If you cannot find "unigenefinder.sif" in the archive or the provided ".sif" file does not run on your system, you may rebuild the singularity container using the follwing command:
+
+```bash
+sudo singularity build unigenefinder.sif unigenefinder_singularity_def.txt
+```
+
 To test the core UnigeneFinder functionality on the example data, which represents a subset of Arabidopsis transcripts and a small number of paired-end reads from two samples used in the benchmarking, run the following command:
 
 ```bash

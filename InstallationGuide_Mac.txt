@@ -1,0 +1,60 @@
+#######################################################
+####################### MACOS #########################
+#######################################################
+
+# Lima Installation Guide for MacOS
+
+This guide will walk you through the steps to install [Lima](https://github.com/lima-vm/lima) on a Mac system. It also includes steps to check if Homebrew is already installed, which we recommend for package management on MacOS.
+
+## Step 1: Check if Lima is Already Installed
+
+1. **Check if Homebrew is in Your Path**:
+   - Open a terminal and run:
+     brew --version
+   - If Homebrew is installed, this command will return the version number.
+   - If not, follow the [instructions](https://brew.sh/) to install Homebrew on your system
+
+## Step 2: Install Lima on Linux
+
+If Lima is not already installed, follow these steps:
+
+1. **Update Package Lists**:
+   - Open a terminal and run:
+     brew update && brew upgrade -y (which may request your password)
+
+2. **Install Lima**:
+   - Run the following command to install Lima and additional dependencies:
+     brew install lima
+     brew install lima-additional-guestagents
+
+## Step 3: Verify Lima Installation
+
+1. **Check the Installed Version**:
+   - Run the following command:
+     limactl --version
+   - You should see the installed Lima version (e.g., `limactl version 2.2.0`).
+
+## Step 4: Creates and Boot Up a Lima Virtual Machine (VM) Instance
+
+1. **If You're Setting Up the VM For the First Time**
+   - Run the following command. Assuming you've already downloaded and unarchived UnigenFinder at "/PATH/TO/UnigeneFinder-1.01":
+     limactl start \
+     --name=unigenefinder \
+     --vm-type=qemu \
+     --arch=x86_64 \
+     --cpus=4 \
+     --memory=8 \
+     --disk=100 \
+     --mount-only "/Users/bxue/Documents/TheRheeLab/C-SPIRIT/RNAseq/UnigeneFinder-1.01:w" \
+     template:apptainer
+   - The above command allows you to run the provide examples. You may adjust the parameters based on your needs.
+
+2. **If You're Opening an Interactive Session Inside an Already Running Instance**
+   - If you've set up the VM follwing the command above, run the following command:
+     limactl shell unigenefinder
+
+## Step 5: Rebuild the UnigeneFinder Singularity Instance If the Provided .sif Failed to Run
+
+1. **If the provided "unigenefinder.sif" file does not run in your VM instance, you may need to rebuild said file**
+   - In the VM interactive session, run the following command:
+     sudo singularity build unigenefinder.sif unigenefinder_singularity_def.txt

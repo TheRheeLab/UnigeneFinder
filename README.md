@@ -10,12 +10,12 @@ The pipeline is implemented in Python and is fully automated, making it accessib
 
 ### Requirements
 
-- Linux or Windows (via WSL)
-- Singularity (for containerized execution)
+- Linux, MacOS or Windows (via WSL)
+- Singularity (for containerized execution) and/or Lima (for MacOS Virtual Machine Instance)
 
 ### Installation
 
-Detailed instructions for installation on both Linux and Windows systems can be found in the operating system-specific installation guides. The included Singularity container in the ZIP archive under the Releases section contains all dependencies, simplifying the setup process.
+Detailed instructions for installation on Linux, MacOS and Windows systems can be found in the operating system-specific installation guides. The included Singularity container in the ZIP archive under the Releases section contains all dependencies, simplifying the setup process.
 
 ### Running UnigeneFinder
 
@@ -28,7 +28,7 @@ Once installed, running UnigeneFinder is straightforward. Example commands and c
 
 To test the pipeline using the provided example data, follow these steps:
 
-First, extract the example data from the provided archive:
+First, extract the example data from the provided archive, note that the example data is only included in [UnigeneFinder v1.0](https://github.com/TheRheeLab/UnigeneFinder/releases/download/v1.0/UnigeneFinder_v1.0.zip):
 
 ```bash
 tar -xvf ExampleData.tar.gz
